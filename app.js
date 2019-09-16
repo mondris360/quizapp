@@ -4,7 +4,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs")
 const app = express();
-const path =  require("path")
+const path =  require("path");
+const initDbSetup =  require("./models/initDBSetup");
 const usersBackendRouters =  require("./routes/usersbackend");
 const frontendRouters =  require("./routes/frontend");
 
