@@ -3,5 +3,11 @@
 
 
 exports.getPage = (req, res) =>{
-    res.send("welcome to the sign up page")
+    res.render("frontend/signup")
+}
+
+
+exports.postPage = (req, res) =>{
+    console.log("hi")
+    console.log(req.body)
 }

@@ -16,6 +16,10 @@ router.get("/signup", (req, res) =>{
     signupController.getPage(req, res);
 });
 
+router.post("/signup", (req, res) =>{
+    signupController.postPage(req, res);
+});
+
 // login routes
 router.get("/login", (req, res) =>{
     loginController.getPage(req, res);

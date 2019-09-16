@@ -9,10 +9,6 @@ const usersBackendRouters =  require("./routes/usersbackend");
 const frontendRouters =  require("./routes/frontend");
 
 
-// routes config
-app.use("/dashboard",usersBackendRouters);
-app.use("/", frontendRouters);
-
 // view engine setup
 app.set("view engine", "ejs");
 // set up views config
@@ -20,6 +16,12 @@ app.set("views",path.join(__dirname,"views"))
 //static files config
 app.use(express.static("static"));
 app.use(bodyParser.urlencoded({extended:true}));
+
+// routes config
+app.use("/dashboard",usersBackendRouters);
+app.use("/", frontendRouters);
+
+
 
 
 // listen on a specific port

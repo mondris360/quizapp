@@ -2,5 +2,5 @@
 
 
 exports.getPage = (req, res) =>{
-    res.send("welcome to the login page")
+    res.render("frontend/login")
 }
