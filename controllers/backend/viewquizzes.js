@@ -10,12 +10,13 @@ exports.getPage = async(req, res) =>{
      try {
         let query = await mysql.query(`SELECT * FROM quiz WHERE userID = ?`, ["e33"]);
         let quizzes = query[0];
+        console.log(quizzes);
         res.status(200);
         res.render("backend/viewquizzes", {quizzes});
      }catch(err){
         console.log(err);
         res.status(500);
-        
+
      }
 
 }
