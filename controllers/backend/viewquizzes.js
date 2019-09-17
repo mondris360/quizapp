@@ -10,13 +10,25 @@ exports.getPage = async(req, res) =>{
      try {
         let query = await mysql.query(`SELECT * FROM quiz WHERE userID = ?`, ["e33"]);
         let quizzes = query[0];
-        console.log(quizzes);
         res.status(200);
         res.render("backend/viewquizzes", {quizzes});
      }catch(err){
         console.log(err);
         res.status(500);
-
      }
 
+}
+
+// HANDLE THE POST REQUEST
+exports.postPage = async(req, res)=>{
+    let searchInput =  `%${req.body.search}%`;
+    try{
+        let query = await  mysql.query(`SELECT * FROM quiz WHERE quizName LIKE ? OR quizID LIKE ?`, [searchInput, searchInput]);
+        let quizzes = query[0];
+        res.status(200);
+        res.render("backend/viewquizzes", {quizzes});
+
+    }catch(err){
+
+    }
 }

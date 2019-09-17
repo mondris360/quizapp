@@ -23,6 +23,7 @@ const mysql =  require('./database');
     quizName varChar(30),
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     questionID varchar(30),
+    totalPlayers Int(10) default 0,
     PRIMARY KEY(quizID),
     FOREIGN KEY(userID) REFERENCES users(id)
 )`;

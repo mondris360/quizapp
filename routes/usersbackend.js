@@ -20,6 +20,10 @@ router.post("/createquiz", (req, res) =>{
 
 router.get("/viewquizzes", (req, res) =>{
     viewquizzesController.getPage(req, res);
+});
+
+router.post("/viewquizzes", (req, res) =>{
+    viewquizzesController.postPage(req, res);
 })
 
 
