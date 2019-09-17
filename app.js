@@ -5,11 +5,29 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs")
 const app = express();
 const path =  require("path");
+const session =  require("express-session");
 const initDbSetup =  require("./models/initDBSetup");
 const usersBackendRouters =  require("./routes/usersbackend");
 const frontendRouters =  require("./routes/frontend");
 
-
+// session
+let sessOptions =  {
+    secret:"smaiht@&#^#*#(#_#(*&#&@*()@snas8745",
+    cookies: {},
+    saveuninitialized: false,
+    resave: false,
+}
+// tell app to use the session 
+app.use(session(sessOptions));
+// middleware to create session
+let createSession = (req, res, next) =>{
+    if(!req.session.quiz){
+        req.session.quiz = {}
+        req.session.questions = [];
+    } 
+    next();
+}
+app.use(createSession);
 // view engine setup
 app.set("view engine", "ejs");
 // set up views config

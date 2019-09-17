@@ -11,7 +11,11 @@ router.get("/", (req, res) =>{
 
 router.get("/createquiz", (req, res) =>{
     createQuizController.getPage(req, res);
-})
+});
+
+router.post("/createquiz", (req, res) =>{
+    createQuizController.postPage(req, res);
+});
 
 
 
