@@ -5,7 +5,10 @@ const helpers = require("../helpers");
 
 
 exports.getPage = (req, res) =>{
-    res.render("frontend/signup")
+    let message =''
+    let messageColor = 'blue';
+    res.status(200);
+    res.render("frontend/signup", {message, messageColor});
 }
 
 // handles the route post request

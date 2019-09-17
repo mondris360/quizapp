@@ -6,6 +6,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Creat A New Quiz</h1>
+            <h4>Total Questions: <%= total %></h4>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle='modal' data-target ='.modal'><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Deposit Money</a>
           </div>
           <p id='message' style='color: <%= messageColor%> '> <%= message %> </p>
@@ -34,8 +35,8 @@
                             <label for="validationServer01">Enter The Correct Answer</label>
                             <input type="text" class="form-control" name="correctAnswer"placeholder="Specify The Correct Answer" required>
                     </div>
-                <button class="btn btn-primary" type="submit" value="save">Save Question</button>
-                <button class="btn btn-primary" type="submit" value="submit">Submit Quiz</button>
+                <button class="btn btn-primary" name="action" type="submit" value="save">Save Question</button>
+                <button class="btn btn-primary" name="action" type="submit" value="submit">Submit Quiz</button>
               </form>
 
 
