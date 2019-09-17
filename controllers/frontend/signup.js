@@ -8,7 +8,7 @@ exports.getPage = (req, res) =>{
     res.render("frontend/signup")
 }
 
-
+// handles the route post request
 exports.postPage = async(req, res) =>{
     let userID = await helpers.generateStr(3);
     let userDetails = {
@@ -16,9 +16,8 @@ exports.postPage = async(req, res) =>{
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password // hash this one latter
     }
-    console.log(userDetails)
     try {
         const emailExists =  await mysql.query(`SELECT email From users WHERE email= ?`,[userDetails.email]);
         if(emailExists[0].length > 0){

@@ -1,0 +1,76 @@
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+        
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+      <!-- Deposit Money Modal Box-->
+      <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Deposit Money To Your Account</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action='/dashboard/initpayment' method='post'>
+              <div class="modal-body"style='text-align:center;'>
+                <label>Amount:</label>
+                <input type='text' name='amount' placeholder="Enter Deposit Amount">
+              </div>
+              <div class="modal-footer">
+                
+                <button type="submit" class="btn btn-primary" >Continue</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of Deposit Modal Box-->
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelx</button>
+                  <a class="btn btn-primary" href="/dashboard/logout">Logout</a>
+                </div>
+              </div>
+            </div>
+            </div>
+
+
+        
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="./static/js/sb-admin-2.min.js"></script>
+
+
+  </body>
+</html>
