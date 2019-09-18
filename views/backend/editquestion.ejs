@@ -1,0 +1,54 @@
+<%-  include('layouts/header') %>
+<body id="page-top">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Edit Quiz Question</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle='modal' data-target ='.modal'><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Deposit Money</a>
+          </div>
+          <p id='message' style='color: <%= messageColor%> '> <%= message %> </p>
+          <form action="/dashboard/editquestion/<%=result.questionID %>" method="post">
+                <div class="col-md-6 mb-3">
+                        <label for="validationServer03">Quiz Question</label>
+                        <input type="text" class="form-control " name="question" value ="<%= result.quizName %>" placeholder="Enter Quiz Question" required>
+                      </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="validationServer01">Answer Option1</label>
+                    <input type="text" class="form-control" name="option1" value ="<%= result.option1 %>" placeholder="Enter Answer Option 1" required>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                        <label for="validationServer01">Answer Option2</label>
+                        <input type="text" class="form-control"name="option2"value ="<%= result.option2 %>" placeholder="Enter Answer Option 2" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationServer01">Answer Option3</label>
+                        <input type="text" class="form-control" name="option3" value ="<%= result.option3 %>"placeholder="Enter Answer Option 3" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                            <label for="validationServer01">Answer Option4</label>
+                            <input type="text" class="form-control" name="option4" value ="<%= result.option4 %>" placeholder="Enter Answer Option 4" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                            <label for="validationServer01">Enter The Correct Answer</label>
+                            <input type="text" class="form-control" name="correctAnswer" value ="<%= result.correctAnswer %>" placeholder="Specify The Correct Answer" required>
+                    </div>
+                <button class="btn btn-primary"  type="submit" value="submit">Update</button>
+              </form>
+
+
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  
+<%-  include('layouts/footer') %>

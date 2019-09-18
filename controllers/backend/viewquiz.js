@@ -19,12 +19,11 @@ exports.getPage = async(req, res) =>{
         let getQuizName = await mysql.query(`SELECT quizName From quiz WHERE quizID = ?`,[quizID]);
         let question = getQuizName[0][0];
         let quizzes = query[0];
-        console.log(quizzes)
         res.status(200);
         res.render("backend/viewquiz", {quizzes,question, message, messageColor});
      }catch(err){
-
         console.log(err);
+        res.status(200);
 
      }
 
