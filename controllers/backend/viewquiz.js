@@ -4,6 +4,7 @@ const mysql =  require("../../models/database");
 const url =  require('url');
 exports.getPage = async(req, res) =>{
     // parse the URL
+    let quizID =  req.params.id;
     let parsedUrl =  url.parse(req.url, true).query;
     let message = parsedUrl.message ? parsedUrl.message : '' ;
     let messageColor = parsedUrl.messageColor ? parsedUrl.messageColor : 'red' ;
@@ -11,10 +12,16 @@ exports.getPage = async(req, res) =>{
     let lastDeposit = 1000;
     let firstName = "Mondris";
      try {
-        let query = await mysql.query(`SELECT * FROM quiz WHERE userID = ? AND status = ?`, ["e33", "active"]);
+        let sql = `SELECT questions.question, questions.questionID,
+        questions.option1, questions.option2, questions.option3, questions.option4,
+        questions.correctAnswer FROM questions WHERE quizID = ?`
+        let query = await mysql.query(sql, [quizID]);
+        let getQuizName = await mysql.query(`SELECT quizName From quiz WHERE quizID = ?`,[quizID]);
+        let question = getQuizName[0][0];
         let quizzes = query[0];
+        console.log(quizzes)
         res.status(200);
-        res.render("backend/viewquizzes", {quizzes, message, messageColor});
+        res.render("backend/viewquiz", {quizzes,question, message, messageColor});
      }catch(err){
 
         console.log(err);
@@ -47,7 +54,6 @@ exports.postPage = async(req, res)=>{
 
 exports.delete = async(req, res) => {
     let quizID =  req.params.id;
-    console.log(req.params.id)
    try{
         let query1 = await mysql.query(`UPDATE quiz SET status = ? WHERE quizID = ?`, ["deleted", quizID]);
         let query2 = await  mysql.query(`SELECT * FROM quiz WHERE status = ?`, ["active"]);

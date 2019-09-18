@@ -3,6 +3,7 @@ const router = express.Router();
 const indexController = require("../controllers/backend/index");
 const createQuizController = require("../controllers/backend/createquiz");
 const viewquizzesController = require("../controllers/backend/viewquizzes");
+const viewquizController = require("../controllers/backend/viewquiz");
 
 
 router.get("/", (req, res) =>{
@@ -24,8 +25,16 @@ router.get("/viewquizzes", (req, res) =>{
 
 router.post("/viewquizzes", (req, res) =>{
     viewquizzesController.postPage(req, res);
-})
+});
 
+router.get("/deletequiz/:id", (req, res) =>{
+    viewquizzesController.delete(req, res);
+});
+
+// view single quiz
+router.get("/viewquiz/:id", (req, res) =>{
+    viewquizController.getPage(req, res);
+});
 
 
 // export the router object
