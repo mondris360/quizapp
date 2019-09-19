@@ -7,7 +7,7 @@ exports.getPage = async(req, res) => {
     // parse the url to get passed valuees
     let parsedUrl =  url.parse(req.url, true).query;
     let message = parsedUrl.message ? parsedUrl.message : '' ;
-    let messageColor = parsedUrl.messageColor ? parsedUrl.messageColor : 'red' ;
+    let messageColor = parsedUrl.messageColor ? parsedUrl.messageColor : 'blue' ;
     let userID = req.session.user.userID;
  
     // get user info from the database

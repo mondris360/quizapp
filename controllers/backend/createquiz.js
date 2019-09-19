@@ -9,7 +9,8 @@ exports.getPage = async(req, res) => {
      let balance;
      let lastDeposit;
      let message = "";
-     let messageColor = ""
+     let messageColor = "";
+     let total =  req.session.questions.length;
      // get user info
      try {
         let query =  await mysql.query(`SELECT firstName, balance, lastdeposit from users WHERE id = ?`, [userID]);
@@ -18,7 +19,7 @@ exports.getPage = async(req, res) => {
         balance = userInfo.balance;
         lastDeposit =  userInfo.lastDeposit;
         res.status(200);
-        res.render("backend/createquiz", {message,  firstName, messageColor, balance, lastDeposit})
+        res.render("backend/createquiz", { total, message,  firstName, messageColor, balance, lastDeposit})
      } catch (err){
         let message ="An error occured while processing Your Request";
         let messageColor = "red";
@@ -33,7 +34,9 @@ exports.getPage = async(req, res) => {
 exports.postPage = async(req, res) => {
     let quizId = await helpers.generateStr(5);
     let questionID =  await helpers.generateStr(5);
-    let question = req.body
+    let userID = req.session.user.userID;
+    let question = req.body;
+    let firstName =  req.session.user.firstName;
     let date = new Date();
     quizDetails = {
         userID: "e33",
@@ -59,47 +62,49 @@ exports.postPage = async(req, res) => {
         let balance = 1000;
         let lastDeposit = 0;
         res.status(200);
-        res.render("backend/createquiz", {total ,message, messageColor, balance, lastDeposit})
+        res.render("backend/createquiz", { firstName, total ,message, messageColor, balance, lastDeposit})
     } else {
-        // update session with the last filled question
-        req.session.questions.push(question);
-        // save quiz Details in the databases
-        try {
-            let quizData = req.session.quiz
-            let questions = req.session.questions;
-            let miniQuestionsDetails = {
-            quizName: "2019 World Cup Questions",
-            questionID:question.questionID
+            req.session.questions.push(question);
+            try {
+                let quizData = req.session.quiz
+                let questions = req.session.questions;
+                let miniQuestionsDetails = {
+                quizName: "2019 World Cup Questions",
+                questionID:question.questionID
+                }
+                let quizinfo = {...quizData, ...miniQuestionsDetails};
+                let checkBalance = await mysql.query(`SELECT balance from users WHERE id =?`, [userID]);
+                let userBalance = checkBalance[0][0].balance;
+                if(userBalance <= 1000){ // cost per creating quiz;
+                    let message ="Insufficient Funds.Please Deposit Money To Your Account";
+                    let messageColor = "red";
+                    res.status(302);
+                    res.redirect(`/dashboard?message=${message}& messageColor=${messageColor}`);
+                } else {
+                    let query1 =  await mysql.query(`INSERT INTO quiz SET ?`, quizinfo);
+                    for (var x = 0; x < questions.length; x++){
+                        let question = questions[x];
+                        // delete the button action property from the object i.e save or submit
+                        delete question.action;
+                        let query2 =  await mysql.query(`INSERT INTO questions SET ?`, question);
+                    }
+                    // deduct cost from user balance
+                    let deductCost =  await mysql.query(`UPDATE users SET balance = balance - 1000 WHERE id = ?`, [userID]);
+                    let message = "Your Quiz Was Created Successfully";
+                    let messageColor =  "blue";
+                    res.status(302);
+                    res.redirect(`/dashboard?message=${message}& messageColor=${messageColor}`);
+                }
+            }catch(err){
+                let message = "Unable To Process Your Request";
+                let messageColor =  "red";
+                let total =  req.session.questions.length;
+                let balance = 1000;
+                let lastDeposit = 0;
+                console.log(err);
+                res.status(500);
+                res.render("backend/createquiz", {firstName,total ,message, messageColor, balance, lastDeposit});
             }
-            let quizinfo = {...quizData, ...miniQuestionsDetails};
-            // store the quiz details in the quiz table
-            let query1 =  await mysql.query(`INSERT INTO quiz SET ?`, quizinfo);
-            console.log("saving to quiz table ")
-            // loop through the questions array and store all questions in the question table
-            for (var x = 0; x < questions.length; x++){
-                let question = questions[x];
-                 // delete the button action property from the object i.e save or submit
-                delete question.action;
-                console.log("...", question)
-                let query2 =  await mysql.query(`INSERT INTO questions SET ?`, question);
-            }
-            let message = "Your Quiz Has Been Created Successfully";
-            let messageColor =  "blue";
-            let total =  req.session.questions.length;
-            let balance = 1000;
-            let lastDeposit = 0;
-            res.status(200);
-            res.render("backend/createquiz", {total ,message, messageColor, balance, lastDeposit})
-        }catch(err){
-            let message = "Unable To Process Your Request";
-            let messageColor =  "red";
-            let total =  req.session.questions.length;
-            let balance = 1000;
-            let lastDeposit = 0;
-            console.log(err);
-            res.status(500);
-            res.render("backend/createquiz", {total ,message, messageColor, balance, lastDeposit});
-        }
     }
 
 
