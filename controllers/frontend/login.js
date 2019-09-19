@@ -2,5 +2,13 @@
 
 
 exports.getPage = (req, res) =>{
-    res.render("frontend/login")
+    let message = "";
+    let messageColor = "red"
+    res.render("frontend/login", {message, messageColor});
+}
+
+// handles the  login route post
+
+exports.postPage = (req, res) => {
+    console.log(req.body)
 }

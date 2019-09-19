@@ -25,6 +25,10 @@ router.post("/signup", (req, res) =>{
 router.get("/login", (req, res) =>{
     loginController.getPage(req, res);
 });
+// login routes
+router.post("/login", (req, res) =>{
+    loginController.postPage(req, res);
+});
 
 // login routes
 router.get("/loadquiz/:quizID", (req, res) =>{

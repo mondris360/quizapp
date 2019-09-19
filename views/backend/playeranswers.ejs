@@ -5,23 +5,35 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">View Quiz Score</h1>
+            <h1 class="h3 mb-0 text-gray-800"><%= question.quizName %></h1>
           </div>
+          <p style="color:<%= messageColor %>"> <%= message %></p>
                <% let counter = 1 %>
-               <% result.forEach((player)=>{ %>
+               <% quizzes.forEach((question)=>{ %>
                 <tr>
                   <div class="card">
                     <div class="card-header">
-                     Player <%= counter %>
-                     <% let fullName = player.firstName + " " + player.lastName %>
+                     Question <%= counter %>
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title">Player Name: <%= fullName %></h5>
-                      <h5>playerID: <%= player.playerID %></h5>
-                      <h5>Player Score: <%= player.playerscore %></h5>
-                      <h5>Quiz Score: <%= player.quizScore %></h5>
-                      <h5>Date: <%= player.date.toJSON().slice(0, 10) %></h5>
-                      <a href="/dashboard/playeranswers/<%= player.playerID %>/<%= player.quizID %>" class="btn btn-primary">View Answers</a>
+                      <h5 class="card-title"><%= question.question %></h5>
+                      <div class="custom-control custom-radio">
+                          <input type="radio" class="custom-control-input" id="defaultChecked2" name="<%= question.questionID %>">
+                          <label class="custom-control-label" for="defaultChecked2"><%= question.option1 %></label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                          <input type="radio" class="custom-control-input" id="defaultChecked2" name="<%= question.questionID %>">
+                          <label class="custom-control-label" for="defaultChecked2"><%= question.option2 %></label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                          <input type="radio" class="custom-control-input" id="defaultChecked2" name="<%= question.questionID %>" >
+                          <label class="custom-control-label" for="defaultChecked2"><%= question.option3 %></label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                          <input type="radio" class="custom-control-input" id="defaultChecked2" name="<%= question.questionID %>" checked>
+                          <label class="custom-control-label" for="defaultChecked2"><%= question.correctAnswer %></label>
+                      </div>
+                      <a href="/dashboard/editquestion/<%= question.questionID %>" class="btn btn-primary">Edit Question</a>
                     </div>
                   </div>
                <% counter++  %>

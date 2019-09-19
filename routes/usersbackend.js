@@ -6,6 +6,7 @@ const viewquizzesController = require("../controllers/backend/viewquizzes");
 const viewquizController = require("../controllers/backend/viewquiz");
 const editQuestionController = require("../controllers/backend/editquestion");
 const viewscoresController = require("../controllers/backend/viewscores");
+const playerAnswersController = require("../controllers/backend/playeranswers");
 
 
 
@@ -50,6 +51,10 @@ router.post("/editquestion/:id", (req, res) =>{
 
 router.get("/viewscores/:quizID", (req, res) =>{
     viewscoresController.getPage(req, res);
+});
+
+router.get("/playeranswers/:playerID/:quizID", (req, res) =>{
+    playerAnswersController.getPage(req, res);
 });
 
 
