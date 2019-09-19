@@ -7,6 +7,8 @@ const viewquizController = require("../controllers/backend/viewquiz");
 const editQuestionController = require("../controllers/backend/editquestion");
 const viewscoresController = require("../controllers/backend/viewscores");
 const playerAnswersController = require("../controllers/backend/playeranswers");
+const payStackController = require("../controllers/backend/paystack");
+
 
 
 
@@ -56,6 +58,11 @@ router.get("/viewscores/:quizID", (req, res) =>{
 router.get("/playeranswers/:playerID/:quizID", (req, res) =>{
     playerAnswersController.getPage(req, res);
 });
+
+//paystack routes
+router.post("/initpayment", (req, res) =>{
+    payStackController.initPayment(req, res);
+})
 
 
 // export the router object

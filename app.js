@@ -22,21 +22,22 @@ app.use(session(sessOptions));
 // middleware to create session
 let createSession = (req, res, next) =>{
     if(!req.session.quiz){
-        req.session.quiz = {}
+        req.session.quiz = {};
+        req.session.user = {};
         req.session.questions = [];
         req.session.correctAnswer = [];
         req.session.wrongAnswer = [];
 
 
 
-        req.session.playerQuizQuestions // store all the questions the user will answer
-        req.session.user = {
-            playerID: "abc5",
-            firstName:"Adams",
-            lastName:"Mark" ,
-            email:"peperapeng@gmail.com",
-            date: "2019-09-17"
-        }
+        req.session.user = {}
+        console.error(req.session.user);
+        //     playerID: "abc5",
+        //     firstName:"Adams",
+        //     lastName:"Mark" ,
+        //     email:"peperapeng@gmail.com",
+        //     date: "2019-09-17"
+        // }
     } 
     next();
 }

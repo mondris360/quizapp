@@ -9,7 +9,7 @@ const mysql =  require('./database');
     lastName varchar(30),
     email varchar(30),
     password varchar(100),
-    depost INT(20) DEFAULT 0,
+    balance INT(20) DEFAULT 0,
     lastDeposit INT(20) DEFAULT 0
 )`;
 	createTable(sql);

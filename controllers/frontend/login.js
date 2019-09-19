@@ -30,16 +30,18 @@ exports.postPage = async(req, res) => {
             res.redirect(`/login?message=${message}&messageColor=${messageColor}`);
         } else {
             let userInfo = query[0][0];
+            console.log(userInfo)
             let storedPass = userInfo.password;
-            let firstName = userInfo.FirstName;
+            let firstName = userInfo.firstName;
             let userId = userInfo.id;
             // check  is password is valid
             if(password === storedPass){
                 // save the user detail in the session
                 req.session.user = {
                     userID: userId,
-                    firstName: firstName,
+                    firstName: firstName
                 }
+                console.log(req.session.user)
                 res.status(200);
                 res.redirect("/dashboard")            
             } else {
