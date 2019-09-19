@@ -5,6 +5,8 @@ const createQuizController = require("../controllers/backend/createquiz");
 const viewquizzesController = require("../controllers/backend/viewquizzes");
 const viewquizController = require("../controllers/backend/viewquiz");
 const editQuestionController = require("../controllers/backend/editquestion");
+const viewscoresController = require("../controllers/backend/viewscores");
+
 
 
 router.get("/", (req, res) =>{
@@ -44,6 +46,10 @@ router.get("/editquestion/:id", (req, res) =>{
 
 router.post("/editquestion/:id", (req, res) =>{
     editQuestionController.postPage(req, res);
+});
+
+router.get("/viewscores/:quizID", (req, res) =>{
+    viewscoresController.getPage(req, res);
 });
 
 

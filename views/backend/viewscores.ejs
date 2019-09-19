@@ -5,55 +5,28 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">My Quizzes</h1>
-            <form action="/dashboard/viewquizzes" method="POST">
-                <input type="text", name="search" placeholder="Search For Quiz" required>
-                <input type="submit" value="search">
-            </form>
+            <h1 class="h3 mb-0 text-gray-800">View Quiz Score</h1>
           </div>
-          <p style="color:<%= messageColor %>"> <%= message %></p>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">QuizID</th>
-                <th scope="col">QuizName</th>
-                <th scope="col">Date Created</th>
-                <th scope="col">Total Players</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
                <% let counter = 1 %>
-               <% quizzes.forEach((quiz)=>{ %>
-                <% let date = quiz.date.toJSON().slice(0,10); %>
+               <% result.forEach((player)=>{ %>
                 <tr>
-                    <th scope="row"><%= counter %></th>
-                    <td><%= quiz.quizID %> </td>
-                    <td><%= quiz.quizName %></td>
-                    <td><%= date %></td>
-                    <td><%= quiz.totalPlayers %></td>
-                    <td></div>
-                        <div class="btn-group open">
-                          <a class="btn btn-primary btn-sm" href="#"><i class="fa fa-user fa-fw"></i> User</a>
-                          <a class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" href="#">
-                            <span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
-                          </a>
-                          <ul class="dropdown-menu">
-                            <li data-toggle="modal" data-target="#"><a href="/dashboard/viewquiz/<%= quiz.quizID %>"><i class="fa fa-pencil fa-fw"></i> view</a></li>
-                            <!-- <li id="edit"><a href="/dashboard/editquestion/<%= quiz.quizID %>"><i class="fa fa-pencil fa-fw"></i> edit</a></li> -->
-                            <li data-toggle="modal" data-target="#scores"><a href="/dashboard/viewscores/<%= quiz.quizID %>"><i class="fa fa-pencil fa-fw"></i> Scores</a></li>
-                            <li id="delete"><a href="/dashboard/deletequiz/<%= quiz.quizID %>"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
-                            <li class="divider"></li>
-                          </ul>
-                      </div></td>
-                </tr>
+                  <div class="card">
+                    <div class="card-header">
+                     Player <%= counter %>
+                     <% let fullName = player.firstName + " " + player.lastName %>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Player Name: <%= fullName %></h5>
+                      <h5>playerID: <%= player.playerID %></h5>
+                      <h5>Player Score: <%= player.playerscore %></h5>
+                      <h5>Quiz Score: <%= player.quizScore %></h5>
+                      <h5>Date: <%= player.date.toJSON().slice(0, 10) %></h5>
+                      <a href="/dashboard/playeranswers/<%= result.playerID %>" class="btn btn-primary">View Answers</a>
+                    </div>
+                  </div>
                <% counter++  %>
                <% }) %>
 
-             
-            </tbody>
-          </table>
 
     </div>
     <!-- End of Content Wrapper -->

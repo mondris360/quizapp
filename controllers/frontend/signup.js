@@ -5,7 +5,7 @@ const helpers = require("../helpers");
 
 
 exports.getPage = (req, res) =>{
-    let message =''
+    let message ='';
     let messageColor = 'blue';
     res.status(200);
     res.render("frontend/signup", {message, messageColor});

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+<title>Take A Quiz</title>
+<link rel="stylesheet" href="../bootstrap-4.3.1-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="../bootstrap-4.3.1-dist/js/jquery.min.js"></script>
+<script src="../bootstrap-4.3.1-dist/js/bootstrap.min.js"></script> 
+<link rel="stylesheet" href="/css/login.css">
+</head>
+<!--Coded with love by Mutiullah Samim-->
+<body>
+    <body id="page-top">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800"><%= question.quizName %></h1>
+
+          </div>
+          <p>Total Questions: <%= totalQuestions %></p>
+          <p style="color:<%= messageColor %>"> <%= message %></p>
+               <% let counter = 1 %>
+               <!-- for (var x = 0; x < quizzes.length; x++){ -->
+               <% quizzes.forEach((question)=>{ %>
+                <form action ="/loadquiz/<%= question.quizID %>" method="post" >
+                <div class="card">
+                    <div class="card-header">
+                     Question <%= counter %>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title"><%= question.question %></h5>
+                      <!-- Group of default radios - option 1 -->
+                    <input name="questionID" value= "<%= question.questionID %>" hidden>
+                    <input name="correctAnswer" value= "<%= question.correctAnswer %>" hidden>
+                    <div class="custom-control custom-radio">
+                        <input type="radio"  name ="<%= question.questionID %>" value ="<%= question.option1 %>" id="question.questionID">
+                        <label ><%= question.option1 %></label>                    
+                        <br>
+                        <input type="radio" name ="<%= question.questionID %>" value ="<%= question.option2 %>">
+                        <label ><%= question.option2 %></label>
+                        <br>
+                        <input type="radio" name ="<%= question.questionID %>" value ="<%= question.option3 %>">
+                        <label ><%= question.option3 %></label>
+                        <br>
+                        <input type="radio" name ="<%= question.questionID %>" value ="<%= question.option4 %>">
+                        <label ><%= question.option4 %></label>
+                        <br>
+                    </div>
+
+                </div>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Submit"> 
+                </form>
+               <% counter++  %>
+               <% }) %>
+               <form action="/viewAnswer/<%= question.quizID %>" >
+                <input class="btn btn-secondary" type="submit" value="View Answer"> 
+               </form>
+
+
+
+
+    </div>
+    <!-- End of Content Wrapper -->
+</body>
+</html>

@@ -24,6 +24,7 @@ const mysql =  require('./database');
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     questionID varchar(30),
     totalPlayers Int(10) default 0,
+    status varchar(15) default "active",
     PRIMARY KEY(quizID),
     FOREIGN KEY(userID) REFERENCES users(id)
 )`;
@@ -33,6 +34,7 @@ const mysql =  require('./database');
 (function questions(){
 	let sql = `CREATE TABLE IF NOT EXISTS questions(
     questionID VARCHAR(20),
+    quizID varchar(10),
     question varchar(50),
     option1 varChar(50),
     option2 varChar(50),
@@ -40,10 +42,59 @@ const mysql =  require('./database');
     option4 varChar(50),
     correctAnswer varChar(50),
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY(questionID)
+    PRIMARY KEY(questionID),
+    FOREIGN KEY(quizID) REFERENCES quiz(quizID)
+
 )`;
 	createTable(sql);
 })();
+
+(function players(){
+	let sql = `CREATE TABLE IF NOT EXISTS players(
+    playerID VARCHAR(10),
+    firstName varchar(30),
+    lastName varChar(30),
+    email varChar(50),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(playerID)
+)`;
+	createTable(sql);
+})();
+
+(function quizScores(){
+	let sql = `CREATE TABLE IF NOT EXISTS quizScores(
+    scoreID VARCHAR(10),
+    quizID varchar(30),
+    playerID varChar(30),
+    playerscore INT(10) DEFAULT 0,
+    quizScore INT(10) DEFAULT 0,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(scoreID),
+    FOREIGN KEY(quizID) REFERENCES quiz(quizID),
+    FOREIGN KEY(playerID) REFERENCES player(playerID)
+
+)`;
+	createTable(sql);
+})();
+
+(function playersAnswers(){
+	let sql = `CREATE TABLE IF NOT EXISTS playersAnswers(
+    answerID VARCHAR(10),
+    quizID varchar(30),
+    playerID VARCHAR(10),
+    questionID VARCHAR(20),
+    playerAnswer VARCHAR(20),
+    correctAnswer VARCHAR(20),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(answerID),
+    FOREIGN KEY(quizID) REFERENCES quiz(quizID),
+    FOREIGN KEY(questionID) REFERENCES questions(questionID),
+    FOREIGN KEY(playerID) REFERENCES players(playerID)
+
+)`;
+	createTable(sql);
+})();
+
 
 
 
