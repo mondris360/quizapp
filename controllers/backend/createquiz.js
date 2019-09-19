@@ -3,14 +3,31 @@
 const helpers = require("../helpers");
 const mysql = require("../../models/database");
 
-exports.getPage = (req, res) => {
-    let message = "none";
-    let messageColor =  "red";
-    let balance = 1000;
-    let lastDeposit = 0;
-    let total = 0;
-    res.status(200);
-    res.render("backend/createquiz", {message, messageColor, balance, lastDeposit, total})
+exports.getPage = async(req, res) => {
+     let userID =  req.session.user.userID;
+     let firstName;
+     let balance;
+     let lastDeposit;
+     let message = "";
+     let messageColor = ""
+     // get user info
+     try {
+        let query =  await mysql.query(`SELECT firstName, balance, lastdeposit from users WHERE id = ?`, [userID]);
+        let userInfo = query[0][0];
+        firstName =  userInfo.first;
+        balance = userInfo.balance;
+        lastDeposit =  userInfo.lastDeposit;
+        res.status(200);
+        res.render("backend/createquiz", {message,  firstName, messageColor, balance, lastDeposit})
+     } catch (err){
+        let message ="An error occured while processing Your Request";
+        let messageColor = "red";
+        console.log(err);
+        res.status(200);
+        res.redirect(`/dashboard?message=${message}&messageColor=${messageColor}`);
+
+     }
+  
 }
 
 exports.postPage = async(req, res) => {

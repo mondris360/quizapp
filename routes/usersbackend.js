@@ -62,7 +62,11 @@ router.get("/playeranswers/:playerID/:quizID", (req, res) =>{
 //paystack routes
 router.post("/initpayment", (req, res) =>{
     payStackController.initPayment(req, res);
-})
+});
+// verify the payment
+router.get("/verifypayment", (req, res) =>{
+    payStackController.verifyPayment(req, res);
+});
 
 
 // export the router object
