@@ -23,12 +23,10 @@ app.use(session(sessOptions));
 let createSession = (req, res, next) =>{
     if(!req.session.quiz){
         req.session.quiz = {}
-        // res.session.quizScore = 0;
         req.session.questions = [];
         req.session.correctAnswer = [];
         req.session.wrongAnswer = [];
-        req.session.playerAnswers = [];
-        req.session.score = 0;
+
 
 
         req.session.playerQuizQuestions // store all the questions the user will answer
