@@ -23,6 +23,7 @@ app.use(session(sessOptions));
 let createSession = (req, res, next) =>{
     if(!req.session.quiz){
         req.session.quiz = {};
+        req.session.quizName = "";
         req.session.user = {};
         req.session.questions = [];
         req.session.correctAnswer = [];
@@ -31,13 +32,14 @@ let createSession = (req, res, next) =>{
 
 
         req.session.user = {}
-        console.error(req.session.user);
-        //     playerID: "abc5",
-        //     firstName:"Adams",
-        //     lastName:"Mark" ,
-        //     email:"peperapeng@gmail.com",
-        //     date: "2019-09-17"
-        // }
+        req.session.player = {
+            playerID: "8554",
+            firstName:"Mondris",
+            lastName:"Miheal" ,
+            email:"callme@gmail.com",
+            date: "2019-09-17"
+        }
+  
     } 
     next();
 }

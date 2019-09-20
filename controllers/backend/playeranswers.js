@@ -6,20 +6,33 @@ exports.getPage = async(req, res) =>{
     // parse the URL
     let quizID =  req.params.quizID;
     let playerID =  req.params.playerID;
-    console.log(quizID, playerID);
-
+    let firstName =  req.session.user.firstName;
     // get all the player selected answers
     try {
-        let testing = ``; 
-        let sql = `SELECT questions.question, playersAnswers.playerID, playersAnswers.correctAnswer, playersAnswers.date
-            FROM questions
-            INNER JOIN playersAnswers ON questions.questionID =  playersanswers.questionID`
-            let query = await mysql.query(`SELECT questionID, playerID, correctAnswer, date
-                from playersanswers WHERE playerID = ? and quizID = ? `, [playerID, quizID]);
-            console.log(query[0]);
 
+        let testing = ``; 
+        let result = []
+            let query = await mysql.query(`SELECT questionID, playerID, correctAnswer,playerAnswer, date
+                from playersanswers WHERE playerID = ? and quizID = ? `, [playerID, quizID]);
+            let queryData = query[0];
+    
+            for (var x=0; x <queryData.length; x++){
+                let questionID = queryData[x].questionID;
+                let questionName =  await mysql.query(`SELECT question from questions WHERE questionID = ?`,[questionID]);
+                let question = questionName[0][0].question;
+                // add the question to the new obj
+                queryData[x].question = question;
+                result.push(queryData[x]);
+            }
+            console.log(result);
+            let message = "";
+            let messageColor = "red";
+            res.status(200);
+            res.render("backend/viewanswers", {result, firstName, message, messageColor})
     } catch(err){
         console.log(err);
+        res.status(500);
+        res.send("An error occured");
     }
 
     // let parsedUrl =  url.parse(req.url, true).query;

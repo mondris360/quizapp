@@ -1,0 +1,32 @@
+<%-  include('layouts/header') %>
+<body id="page-top">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Creat A New Quiz</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle='modal' data-target ='.modal'><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Deposit Money</a>
+          </div>
+          <p id='message' style='color: <%= messageColor%> '> <%= message %> </p>
+          <form action="/dashboard/createquiz1" method="post">
+                <div class="col-md-6 mb-3">
+                    <label for="validationServer03">Quiz Name</label>
+                    <input type="text" class="form-control " name="quizname" placeholder="Enter Quiz Title" required>
+                </div>
+                <button style="margin-left:200px"class="btn btn-primary" name="action" type="submit" value="submit">Continue</button>
+            </form>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  
+<%-  include('layouts/footer') %>

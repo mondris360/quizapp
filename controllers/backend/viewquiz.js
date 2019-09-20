@@ -3,14 +3,12 @@
 const mysql =  require("../../models/database");
 const url =  require('url');
 exports.getPage = async(req, res) =>{
-    // parse the URL
     let quizID =  req.params.id;
-    let parsedUrl =  url.parse(req.url, true).query;
+    let parsedUrl =  url.parse(req.url, true).query; // parse the url
     let message = parsedUrl.message ? parsedUrl.message : '' ;
-    let messageColor = parsedUrl.messageColor ? parsedUrl.messageColor : 'red' ;
-    let total = 0;
-    let lastDeposit = 1000;
-    let firstName = "Mondris";
+    let messageColor = parsedUrl.messageColor ? parsedUrl.messageColor : 'blue' ;
+    let firstName = req.session.user.firstName;
+
      try {
         let sql = `SELECT questions.question, questions.questionID,
         questions.option1, questions.option2, questions.option3, questions.option4,
@@ -20,10 +18,13 @@ exports.getPage = async(req, res) =>{
         let question = getQuizName[0][0];
         let quizzes = query[0];
         res.status(200);
-        res.render("backend/viewquiz", {quizzes,question, message, messageColor});
+        res.render("backend/viewquiz", {firstName, quizzes,question, message, messageColor});
      }catch(err){
+        let message ="Unable To Process Your Request.Please Try Again";
+        let messageColor = "red";
         console.log(err);
-        res.status(200);
+        res.status(302);
+        res.redirect(`/dashboard?message=${message}& messageColor=${messageColor}`);
 
      }
 

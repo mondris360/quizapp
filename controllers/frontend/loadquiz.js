@@ -53,6 +53,7 @@ exports.postPage = async(req, res) => {
     let questionID = playerAnsDetails.questionID;
     let userAnswer = playerAnsDetails.playerAnswer;
     // check if the user answer is correct;
+    console.log(userAnswer, correctAnswer);
     if (userAnswer === correctAnswer){
         req.session.correctAnswer.push(playerAnsDetails);
     } else {
@@ -102,7 +103,20 @@ exports.postPage = async(req, res) => {
 }
 
 exports.showresult = async(req, res) =>{
-    let playerDetails = req.session.user;
+    let date = new Date().toJSON().slice(0, 10);
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
+    let email = req.body.email;
+
+    req.session.player = {
+        playerID: await helpers.generateStr(5),
+        date,
+        firstName,
+        lastName,
+        email
+    }
+    let playerDetails = req.session.player;
+    let playerID = req.session.player.playerID;
     let quizID = req.params.quizID;
     let totalQuestions = req.session.questions.length;
     let totalpassed =  req.session.correctAnswer.length;
@@ -113,7 +127,7 @@ exports.showresult = async(req, res) =>{
     let scoreDetails = {
         scoreID,
         quizID,
-        playerID:req.session.user.playerID,
+        playerID:playerID,
         playerscore: totalpassed,
         quizScore:totalQuestions
         
@@ -127,18 +141,23 @@ exports.showresult = async(req, res) =>{
         }
         //  save the player answer choices
         for (var x=0; x <allAnswers.length; x++){
-            let query =  await mysql.query(`INSERT INTO playersanswers SET ?`, allAnswers[x])
+            if(allAnswers[x].length !== 0){
+                // add player id to the object
+                allAnswers[x].playerID = req.session.player.playerID;
+                let answerDetails = allAnswers[x];
+                console.log(answerDetails);
+                let query =  await mysql.query(`INSERT INTO playersanswers SET ?`, answerDetails);
+            }
+            
         }
         // save player score;
         let query = await mysql.query(`INSERT INTO quizscores SET?`, scoreDetails);
+        res.status(200);
+        res.render("frontend/answer", {totalQuestions, totalpassed})
     }catch(err){
         // i will handle this error properly latter
         console.log(err);
         res.send("Unable To Process Your Request.Please click back and try again")
 
     }
-
-
-    res.status(200);
-    res.render("frontend/answer", {totalQuestions, totalpassed})
 }

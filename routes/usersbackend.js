@@ -1,7 +1,8 @@
 const express =  require("express");
 const router = express.Router();
 const indexController = require("../controllers/backend/index");
-const createQuizController = require("../controllers/backend/createquiz");
+const createQuizController1 = require("../controllers/backend/createquiz1");
+const createQuizController2 = require("../controllers/backend/createquiz");
 const viewquizzesController = require("../controllers/backend/viewquizzes");
 const viewquizController = require("../controllers/backend/viewquiz");
 const editQuestionController = require("../controllers/backend/editquestion");
@@ -17,12 +18,17 @@ router.get("/", (req, res) =>{
     indexController.getPage(req, res);
 });
 
-router.get("/createquiz", (req, res) =>{
-    createQuizController.getPage(req, res);
+router.get("/createquiz1", (req, res) =>{
+    createQuizController1.getPage(req, res);
 });
-
-router.post("/createquiz", (req, res) =>{
-    createQuizController.postPage(req, res);
+router.post("/createquiz1", (req, res) =>{
+    createQuizController1.postPage(req, res);
+});
+router.get("/createquiz2", (req, res) =>{
+    createQuizController2.getPage(req, res);
+});
+router.post("/createquiz2", (req, res) =>{
+    createQuizController2.postPage(req, res);
 });
 
 router.get("/viewquizzes", (req, res) =>{

@@ -10,6 +10,7 @@ const mysql =  require('./database');
     email varchar(30),
     password varchar(100),
     balance INT(20) DEFAULT 0,
+    refCode VARCHAR(20),
     lastDeposit INT(20) DEFAULT 0
 )`;
 	createTable(sql);
@@ -71,7 +72,7 @@ const mysql =  require('./database');
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(scoreID),
     FOREIGN KEY(quizID) REFERENCES quiz(quizID),
-    FOREIGN KEY(playerID) REFERENCES player(playerID)
+    FOREIGN KEY(playerID) REFERENCES players(playerID)
 
 )`;
 	createTable(sql);

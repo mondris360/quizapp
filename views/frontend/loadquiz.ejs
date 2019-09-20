@@ -59,12 +59,40 @@
                 </form>
                <% counter++  %>
                <% }) %>
-               <form action="/viewAnswer/<%= question.quizID %>" >
-                <input class="btn btn-secondary" type="submit" value="View Answer"> 
-               </form>
+               <!-- <form action= > -->
+                <a class="collapse-item  btn btn-secondary active" data-toggle="modal" data-target =".modal"  type="button" href="#">View Result</a>
+              <!-- </form> -->
 
+<%-  include('layouts/footer') %>
 
-
+<!-- <div class="modal" id="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Player Info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action='/viewAnswer/<%= question.quizID %>' method='post'>
+        <div class="modal-body"style='text-align:center;'>
+          <label>First Name:</label>
+          <input type='text' name='firstName' placeholder="Enter First Name">
+          <label>Last Name:</label>
+          <input type='text' name='firstName' placeholder="Enter Last Name">
+          <label>E-mail:</label>
+          <input type='text' name='firstName' placeholder="Enter E-mail Address">
+        </div>
+        <div class="modal-footer">
+          
+          <button type="submit" class="btn btn-primary" >Continue</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- End of Deposit Modal Box-->
 
     </div>
     <!-- End of Content Wrapper -->

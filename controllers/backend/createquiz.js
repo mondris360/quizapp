@@ -4,45 +4,27 @@ const helpers = require("../helpers");
 const mysql = require("../../models/database");
 
 exports.getPage = async(req, res) => {
-     let userID =  req.session.user.userID;
-     let firstName;
-     let balance;
-     let lastDeposit;
+     let firstName =  req.session.user.firstName;
+     let total =  req.session.questions.length;
      let message = "";
      let messageColor = "";
-     let total =  req.session.questions.length;
-     // get user info
-     try {
-        let query =  await mysql.query(`SELECT firstName, balance, lastdeposit from users WHERE id = ?`, [userID]);
-        let userInfo = query[0][0];
-        firstName =  userInfo.first;
-        balance = userInfo.balance;
-        lastDeposit =  userInfo.lastDeposit;
-        res.status(200);
-        res.render("backend/createquiz", { total, message,  firstName, messageColor, balance, lastDeposit})
-     } catch (err){
-        let message ="An error occured while processing Your Request";
-        let messageColor = "red";
-        console.log(err);
-        res.status(200);
-        res.redirect(`/dashboard?message=${message}&messageColor=${messageColor}`);
-
-     }
-  
+     res.status(200);
+     res.render("backend/createquiz2", { total, message,  firstName, messageColor});
 }
 
 exports.postPage = async(req, res) => {
-    let quizId = await helpers.generateStr(5);
+    let quizID = await helpers.generateStr(5);
     let questionID =  await helpers.generateStr(5);
     let userID = req.session.user.userID;
+    let quizName =  req.session.quizName;
     let question = req.body;
+    let date = new Date().toJSON().slice(0, 10)
     let firstName =  req.session.user.firstName;
-    let date = new Date();
-    quizDetails = {
-        userID: "e33",
-        quizID: quizId,
-        quizName: "2019 World Cup",
-        date:date.toJSON().slice(0, 10)
+    let  quizDetails = {
+        userID,
+        quizID,
+        quizName,
+        date
     };
     if(Object.keys(req.session.quiz).length === 0){
         console.log("saving quiz session")
@@ -59,23 +41,21 @@ exports.postPage = async(req, res) => {
         let message = "Question Saved Successfully";
         let messageColor =  "blue";
         let total =  req.session.questions.length;
-        let balance = 1000;
-        let lastDeposit = 0;
         res.status(200);
-        res.render("backend/createquiz", { firstName, total ,message, messageColor, balance, lastDeposit})
+        res.render("backend/createquiz2", { firstName, total ,message, messageColor})
     } else {
             req.session.questions.push(question);
             try {
                 let quizData = req.session.quiz
                 let questions = req.session.questions;
                 let miniQuestionsDetails = {
-                quizName: "2019 World Cup Questions",
+                quizName,
                 questionID:question.questionID
                 }
                 let quizinfo = {...quizData, ...miniQuestionsDetails};
                 let checkBalance = await mysql.query(`SELECT balance from users WHERE id =?`, [userID]);
                 let userBalance = checkBalance[0][0].balance;
-                if(userBalance <= 1000){ // cost per creating quiz;
+                if(userBalance < 1000){ // cost per creating quiz;
                     let message ="Insufficient Funds.Please Deposit Money To Your Account";
                     let messageColor = "red";
                     res.status(302);
@@ -103,11 +83,7 @@ exports.postPage = async(req, res) => {
                 let lastDeposit = 0;
                 console.log(err);
                 res.status(500);
-                res.render("backend/createquiz", {firstName,total ,message, messageColor, balance, lastDeposit});
+                res.render("backend/createquiz2", {firstName,total ,message, messageColor, balance, lastDeposit});
             }
     }
-
-
-
-
 }

@@ -40,7 +40,7 @@ router.post("/loadquiz/:quizID", (req, res) =>{
 });
 
 // display user answer
-router.get("/viewAnswer/:quizID", (req, res) =>{
+router.post("/viewAnswer/:quizID", (req, res) =>{
     loadQuizController.showresult(req, res);
 });
 
